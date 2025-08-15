@@ -41,7 +41,7 @@ tilapia_imports
 ```
 
 ```{r}
-ggsave(here::here("figs", "tilapia_imports.png"))
+ggsave(here::here("figs", "tilapia_imports.jpeg"))
 ```
 
 ```{r}
@@ -62,6 +62,6 @@ cen_am_imports <- ggplot(central_amer, aes(year, tilapia, color = country)) +
 cen_am_imports
 ```
 ```{r}
-ggsave(here::here("figs", "cen_am_imports.png"), height = 5, width = 8)
+ggsave(here::here("figs", "cen_am_imports.jpeg"), height = 5, width = 8)
 ```
 
