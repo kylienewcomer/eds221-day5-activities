@@ -1,0 +1,47 @@
+---
+title: "runoff_volumes"
+output: html_document
+date: "2025-08-15"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(here)
+library(tidyverse)
+```
+```{r}
+source(here::here("src", "storm_runoff.R"))
+```
+
+```{r}
+impervious_fraction <- seq(from = 0.6, to = 0.8, by = 0.01)
+
+runoff_volume <- vector(mode = "numeric", length = length(impervious_fraction))
+
+runoff_volume <- predict_runoff(impervious_fraction, 182)
+
+
+runoff_df <- data.frame(impervious_fraction = impervious_fraction,
+                        runoff_volume = runoff_volume)
+
+```
+
+```{r}
+runoff_fig <- ggplot(runoff_df, aes(impervious_fraction, runoff_volume)) +
+  geom_point() +
+  geom_line() +
+  labs(x = "Impervious Fraction",
+       y = "Runoff Volume (cubic ft)")
+runoff_fig
+```
+```{r}
+ggsave(here::here("figs", "runoff_fig.jpeg"), height = 5, width = 8)
+```
+
+```{r}
+
+```
+

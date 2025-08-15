@@ -1,0 +1,41 @@
+---
+title: "US Tilapia Imports"
+output: html_document
+date: "2025-08-15"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(here)
+library(janitor)
+```
+```{r}
+us_tilapia_imports <- read_csv(here::here("data", "us_tilapia_imports.csv"))
+```
+```{r}
+tilapia_long <- us_tilapia_imports %>% 
+  pivot_longer(!country, names_to = "year", values_to = "tilapia")
+ 
+tilapia_long$year <- as.numeric(tilapia_long$year)
+
+
+```
+
+```{r}
+yearly_tilapia_tot <- tilapia_long %>%  dplyr::group_by(year) %>% summarize(sum_tilapia = sum(tilapia, na.rm = TRUE))
+
+
+```
+
+```{r}
+ggplot(yearly_tilapia_tot, aes(year, sum_tilapia)) +
+  geom_point() +
+  labs(title = "US Imports of Tilapia",
+       x = "Year",
+       y = "Imported Tilapia (thousands of lbs)")
+```
+
