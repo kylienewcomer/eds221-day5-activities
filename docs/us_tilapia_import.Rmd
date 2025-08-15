@@ -32,10 +32,36 @@ yearly_tilapia_tot <- tilapia_long %>%  dplyr::group_by(year) %>% summarize(sum_
 ```
 
 ```{r}
-ggplot(yearly_tilapia_tot, aes(year, sum_tilapia)) +
+tilapia_imports <- ggplot(yearly_tilapia_tot, aes(year, sum_tilapia)) +
   geom_point() +
   labs(title = "US Imports of Tilapia",
        x = "Year",
        y = "Imported Tilapia (thousands of lbs)")
+tilapia_imports
+```
+
+```{r}
+ggsave(here::here("figs", "tilapia_imports.png"))
+```
+
+```{r}
+central_amer <- tilapia_long %>% 
+  subset(country == "Honduras" | country == "Mexico" | country == "Costa Rica" | country == "Ecuador")
+```
+
+```{r}
+cen_am_imports <- ggplot(central_amer, aes(year, tilapia, color = country)) +
+  geom_point() +
+  scale_color_manual(values = c("darkblue", "lightpink", "lightgreen", "orange")) +
+  facet_wrap(~country) +
+  theme_minimal() +
+    labs(title = "US Imports of Tilapia from Central America",
+       x = "Year",
+       y = "Imported Tilapia (thousands of lbs)")
+
+cen_am_imports
+```
+```{r}
+ggsave(here::here("figs", "cen_am_imports.png"), height = 5, width = 8)
 ```
 
